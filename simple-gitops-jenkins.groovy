@@ -58,7 +58,7 @@ spec:
                 container('docker')
                 {
                   sh 'docker version'
-                  sh 'docker build -t tawliew/techhour:$BUILD_NUMBER'
+                  sh 'docker build -t tawliew/techhour:$BUILD_NUMBER .'
 
                 }
             }
