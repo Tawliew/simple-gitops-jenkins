@@ -10,7 +10,7 @@ pipeline
             {
                 echo "Clone APP repo"
                 git branch: 'main', url: 'https://github.com/Tawliew/simple-project-demo-argocd'
-                
+                sh "ls -l"
                 dir('simple-project-demo-argocd')
                 {
                     sh "ls -l"
@@ -44,9 +44,11 @@ pipeline
             {
                 echo "Clone APP repo"
                 git branch: 'main', url: 'https://github.com/Tawliew/manifests-demo-argocd'
+                sh "ls -l"
                 dir('manifests-demo-argocd')
                 {
                     echo "Build File"
+                    sh "ls -l"
                     script 
                     {                       
                         def filename = 'deployment.yaml'
