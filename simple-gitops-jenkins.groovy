@@ -80,7 +80,7 @@ spec:
                 sh "ls -l"
             }
         }
-        stage ('CommitInfraRepo')
+        stage ('DeployInfraCodeToRepo')
         {
             steps
             {
@@ -97,6 +97,8 @@ spec:
                         sh "rm $filename" //Preciso remover para o arquivo para conseguir escrever com writeYaml
                         writeYaml file: filename, data: data
                     }
+                sh  'git config --global user.email "lfluiz.lf@gmail.com"'
+                sh  'git config --global user.name "JenkinsCD"'
                 sh 'cat deployment.yaml'
                 sh 'git add deployment.yaml'
                 sh 'git commit -m "📢 Jenkins auto-commit 👷‍♂️"'
