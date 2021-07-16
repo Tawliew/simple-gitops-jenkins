@@ -49,7 +49,7 @@ pipeline
                         def data = readYaml file: filename
 
                         // Change something in the file
-                        data.spec.template.spec.containers[0].image = nginx
+                        data.kind = nginx
 
                         sh "rm $filename"
                         writeYaml file: filename, data: data
