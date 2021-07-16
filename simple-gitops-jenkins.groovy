@@ -18,6 +18,7 @@ pipeline
             steps
             {
                 echo "Build teste..."
+                sh "ls -l"
             }
         }
         stage ('Test')
@@ -25,6 +26,7 @@ pipeline
             steps
             {
                 echo "Test..."
+                sh "ls -l"
             }
         }
         stage ('Publish')
@@ -32,6 +34,7 @@ pipeline
             steps
             {
                 echo "Publish..."
+                sh "ls -l"
             }
         }
         stage ('CommitInfraRepo')
@@ -40,21 +43,18 @@ pipeline
             {
                 echo "Clone APP repo"
                 git branch: 'develop', url: 'https://github.com/Tawliew/manifests-demo-argocd'
-                sh "ls -l"
                 echo "Build File"
-                sh "ls -l"
                 script 
                     {                       
                         def filename = 'deployment.yaml'
                         def data = readYaml file: filename
 
-                        // Change something in the file
                         data.spec.template.spec.containers[0].image = "httpd"
 
-                        sh "rm $filename"
+                        sh "rm $filename" //Preciso remover para o arquivo para conseguir escrever com writeYaml
                         writeYaml file: filename, data: data
                     }
-                sh "cat deployment.yaml"
+                
             }
         }
     }
