@@ -98,7 +98,7 @@ spec:
                         writeYaml file: filename, data: data
                     }
                 sh  'git config --global user.email "lfluiz.lf@gmail.com"'
-                sh  'git config --global user.name "JenkinsCD"'
+                sh  'git config --global user.name "tawliew"'
                 sh 'cat deployment.yaml'
                 sh 'git add deployment.yaml'
                 sh 'git commit -m "📢 Jenkins auto-commit 👷‍♂️"'
