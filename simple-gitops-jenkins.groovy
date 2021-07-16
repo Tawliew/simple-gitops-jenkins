@@ -102,7 +102,10 @@ spec:
                 sh 'cat deployment.yaml'
                 sh 'git add deployment.yaml'
                 sh 'git commit -m "📢 Jenkins auto-commit 👷‍♂️"'
-                sh 'git push origin develop'
+                withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'pass', usernameVariable: 'user')])
+                {
+                  sh("git push https://$user:$pass@github.com/Tawliew/manifests-demo-argocd")
+                }
             }
         }
     }
