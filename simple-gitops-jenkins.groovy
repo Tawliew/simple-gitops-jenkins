@@ -65,12 +65,17 @@ spec:
         }
         stage ('Publish')
         {
+            environment
+            {
+              DOCKERHUB_CREDS = credentials('dockerhub')
+            }
             steps
             {
                 echo "Publish..."
                 container('docker')
                 {
                   sh 'docker images'
+                  sh "docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW && docker push tawliew/techhour:$BUILD_NUMBER"
                 }
                 sh "ls -l"
             }
@@ -92,6 +97,8 @@ spec:
                         sh "rm $filename" //Preciso remover para o arquivo para conseguir escrever com writeYaml
                         writeYaml file: filename, data: data
                     }
+                sh 'cat deployment.yaml'
+
             }
         }
     }
