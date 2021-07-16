@@ -9,7 +9,7 @@ pipeline
             steps
             {
                 echo "Clone APP repo"
-                git "https://github.com/Tawliew/simple-project-demo-argocd"
+                git branch: 'main', url: 'https://github.com/Tawliew/simple-project-demo-argocd'
                 
                 dir('simple-project-demo-argocd')
                 {
@@ -43,7 +43,7 @@ pipeline
             steps
             {
                 echo "Clone APP repo"
-                git "https://github.com/Tawliew/manifests-demo-argocd"
+                git branch: 'main', url: 'https://github.com/Tawliew/manifests-demo-argocd'
                 dir('manifests-demo-argocd')
                 {
                     echo "Build File"
