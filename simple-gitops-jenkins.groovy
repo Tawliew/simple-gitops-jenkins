@@ -39,7 +39,7 @@ pipeline
             steps
             {
                 echo "Clone APP repo"
-                git branch: 'main', url: 'https://github.com/Tawliew/manifests-demo-argocd'
+                git branch: 'develop', url: 'https://github.com/Tawliew/manifests-demo-argocd'
                 sh "ls -l"
                 echo "Build File"
                 sh "ls -l"
