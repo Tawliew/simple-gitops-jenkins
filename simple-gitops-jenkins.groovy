@@ -4,7 +4,8 @@ pipeline
     {
       kubernetes
       {
-        yaml: '''
+        label 'test docker'
+        yaml """
 apiVersion: v1
 kind: Pod
 spec:
@@ -28,7 +29,7 @@ spec:
     volumeMounts:
     - name: docker-socket
       mountPath: /var/run
-'''
+"""
       }
     }
     stages 
