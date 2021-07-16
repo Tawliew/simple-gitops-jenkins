@@ -39,7 +39,7 @@ spec:
             steps
             {
                 echo "Clone APP repo"
-                git branch: 'main', url: 'https://github.com/Tawliew/simple-project-demo-argocd'
+                git branch: 'develop', url: 'https://github.com/Tawliew/simple-project-demo-argocd'
                 sh "ls -l"
             }
         }
