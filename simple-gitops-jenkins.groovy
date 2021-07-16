@@ -85,7 +85,7 @@ spec:
             steps
             {
                 echo "Clone APP repo"
-                git branch: 'develop', url: 'https://github.com/Tawliew/manifests-demo-argocd'
+                git branch: 'develop', credentialsId: 'github', url: 'https://github.com/Tawliew/manifests-demo-argocd'
                 echo "Build File"
                 script 
                     {                       
@@ -98,7 +98,9 @@ spec:
                         writeYaml file: filename, data: data
                     }
                 sh 'cat deployment.yaml'
-
+                sh 'git add deployment.yaml'
+                sh 'git commit -m "📢 Jenkins auto-commit 👷‍♂️"'
+                sh 'git push origin main'
             }
         }
     }
