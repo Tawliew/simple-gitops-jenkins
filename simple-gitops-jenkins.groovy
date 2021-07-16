@@ -17,7 +17,8 @@ pipeline
         {
             steps
             {
-                echo "Build teste..."
+                echo "Build..."
+                sh "docker build -t test_image:1.0 ."
                 sh "ls -l"
             }
         }
@@ -25,8 +26,8 @@ pipeline
         {
             steps
             {
-                echo "Test..."
-                sh "ls -l"
+                sh "docker run -d -p 80:80 test_image:1.0"
+                sh "curl localhost:80"
             }
         }
         stage ('Publish')
@@ -54,7 +55,6 @@ pipeline
                         sh "rm $filename" //Preciso remover para o arquivo para conseguir escrever com writeYaml
                         writeYaml file: filename, data: data
                     }
-                
             }
         }
     }
