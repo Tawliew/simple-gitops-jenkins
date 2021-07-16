@@ -4,7 +4,7 @@ pipeline
     {
       kubernetes
       {
-        label 'test docker'
+        label 'undercover-hudson'
         yaml """
 apiVersion: v1
 kind: Pod
@@ -43,6 +43,13 @@ spec:
                 sh "ls -l"
             }
         }
+        stage ('Test')
+        {
+            steps
+            {
+                echo "Testing..."
+            }
+        }
         stage ('Build')
         {
             steps
@@ -51,15 +58,9 @@ spec:
                 container('docker')
                 {
                   sh 'docker version'
+                  sh 'docker build -t tawliew/techhour:$BUILD_NUMBER'
+
                 }
-            }
-        }
-        stage ('Test')
-        {
-            steps
-            {
-                sh "docker run -d -p 80:80 test_image:1.0"
-                sh "curl localhost:80"
             }
         }
         stage ('Publish')
@@ -67,6 +68,10 @@ spec:
             steps
             {
                 echo "Publish..."
+                container('docker')
+                {
+                  sh 'docker images'
+                }
                 sh "ls -l"
             }
         }
@@ -82,7 +87,7 @@ spec:
                         def filename = 'deployment.yaml'
                         def data = readYaml file: filename
 
-                        data.spec.template.spec.containers[0].image = "httpd"
+                        data.spec.template.spec.containers[0].image = "tawliew/techhour:$BUILD_NUMBER"
 
                         sh "rm $filename" //Preciso remover para o arquivo para conseguir escrever com writeYaml
                         writeYaml file: filename, data: data
