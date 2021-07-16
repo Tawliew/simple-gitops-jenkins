@@ -2,40 +2,34 @@ pipeline
 {
     agent 
     {
-        kubernetes 
-        {
-            yaml """
+      kubernetes {
+      label 'jenkins-slave'
+      defaultContainer 'jnlp'
+      yaml """
 apiVersion: v1
 kind: Pod
-metadata:
-  labels:
-    jenkins/kube-default: true
-    app: jenkins
-    component: agent
 spec:
   containers:
-    - name: jnlp
-      image: jenkins/inbound-agent:4.6-1
-      env:
-      - name: POD_IP
-        valueFrom:
-          fieldRef:
-            fieldPath: status.podIP
-      - name: DOCKER_HOST
-        value: tcp://localhost:2375
-    - name: dind
-      image: docker:18.05-dind
-      securityContext:
-        privileged: true
-      volumeMounts:
-        - name: dind-storage
-          mountPath: /var/lib/docker
-  volumes:
-    - name: dind-storage
-      emptyDir: {}
+  - name: dind
+    image: docker:18.09-dind
+    securityContext:
+      privileged: true
+  - name: docker
+    env:
+    - name: DOCKER_HOST
+      value: 127.0.0.1
+    image: docker:18.09
+    command:
+    - cat
+    tty: true
+  - name: tools
+    image: argoproj/argo-cd-ci-builder:v0.13.1
+    command:
+    - cat
+    tty: true
 """
-        }
     }
+  }
 
     stages 
     {
