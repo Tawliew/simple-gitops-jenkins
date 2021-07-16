@@ -48,8 +48,10 @@ spec:
             steps
             {
                 echo "Build..."
-                sh "docker build -t test_image:1.0 ."
-                sh "ls -l"
+                container('docker')
+                {
+                  sh 'docker version'
+                }
             }
         }
         stage ('Test')
